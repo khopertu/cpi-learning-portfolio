@@ -19,6 +19,7 @@ Expected result:
 - `region = "EU"`
 - `channel = "standard"`
 - `flowType = "default-path"`
+- `priority = "high"`
 
 ---
 
@@ -65,6 +66,18 @@ Expected result:
 - error: `Missing query param 'name'`
 
 ---
+
+## 5) Invalid region case
+
+Request:
+
+```text
+/ping2?name=Alex&region=LATAM
+```
+
+Expected result:
+- status code: `400`
+- error: `Invalid query param 'region'`
 
 ## Notes
 
