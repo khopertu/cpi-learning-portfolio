@@ -19,7 +19,7 @@ Expected result:
 - `region = "EU"`
 - `channel = "standard"`
 - `flowType = "default-path"`
-- `priority = "high"`
+- `priority = "normal"`
 
 ---
 
@@ -36,6 +36,7 @@ Expected result:
 - `source = "mobile"`
 - `channel = "app"`
 - `flowType = "mobile-path"`
+- `priority = "high"`
 
 ---
 
