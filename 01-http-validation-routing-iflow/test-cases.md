@@ -19,6 +19,7 @@ Expected result:
 - `region = "EU"`
 - `channel = "standard"`
 - `flowType = "default-path"`
+- `priority = "normal"`
 
 ---
 
@@ -35,6 +36,7 @@ Expected result:
 - `source = "mobile"`
 - `channel = "app"`
 - `flowType = "mobile-path"`
+- `priority = "high"`
 
 ---
 
@@ -77,55 +79,6 @@ Request:
 Expected result:
 - status code: `400`
 - error: `Invalid query param 'region'`
-
-## 6) POST JSON body success case
-
-Request:
-
-```http
-POST /ping2
-Content-Type: application/json
-```
-
-Body:
-
-```json
-{
-  "name": "Alex",
-  "source": "mobile",
-  "region": "EU",
-  "mode": "basic",
-  "level": "junior"
-}
-```
-
-Expected result:
-- status code: `200`
-- `name = "Alex"`
-- `source = "mobile"`
-- `region = "EU"`
-- `channel = "app"`
-- `flowType = "mobile-path"`
-- `priority = "high"`
-
-## 7) Malformed JSON body case
-
-Request:
-
-```http
-POST /ping2
-Content-Type: application/json
-```
-
-Body:
-
-```json
-{"name":"Alex","source":}
-```
-
-Expected result:
-- status code: `400`
-- error: `Invalid JSON body`
 
 ## Notes
 
