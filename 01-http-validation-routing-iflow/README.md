@@ -72,6 +72,7 @@ The `screenshots/` folder contains evidence of the implemented iFlow design and 
 - `04-default-content-modifier-properties.png` → default branch exchange properties
 - `05-mobile-success-response.png` → successful mobile route response
 - `06-invalid-source-error-response.png` → invalid input handled with HTTP 400
+- `07-post-json-success-response.png` → successful POST request using JSON body input
 
 ## Test Evidence
 
@@ -97,3 +98,51 @@ These tests confirm that the iFlow handles default values, input validation, Rou
 This project currently uses query-parameter input and includes validation, default values, derived properties, Router-based branching, branch-specific properties, and JSON responses.
 
 A planned next step is to extend the flow so it can also accept JSON body input while keeping the internal flow design stable.
+
+## Versions
+
+### Version 1.0 - Query Parameter Input
+
+The first version of this iFlow supported HTTP input through query parameters.
+
+Example:
+
+```text
+GET /ping2?name=Alex&source=mobile&region=EU
+```
+
+This version focused on:
+
+- reading query parameters
+- validating required and optional fields
+- applying default values
+- deriving internal properties
+- routing based on `channel`
+- setting branch-specific properties
+- returning structured JSON responses
+- handling input errors with HTTP `400`
+
+### Version 1.1 - JSON Body Input Support
+
+The iFlow was extended to support JSON request body input in addition to query parameters.
+
+Example:
+
+```http
+POST /ping2
+Content-Type: application/json
+```
+
+```json
+{
+  "name": "Alex",
+  "source": "mobile",
+  "region": "EU",
+  "mode": "basic",
+  "level": "junior"
+}
+```
+
+In this version, the Parse Groovy script normalizes both input styles into the same internal properties.
+
+This allows the Router, branch Content Modifiers, Request Reply, Response Builder, and Exception Subprocess to remain mostly stable.
