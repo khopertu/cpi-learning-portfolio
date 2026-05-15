@@ -18,7 +18,8 @@ def Message processData(Message message) {
 
     def missingMatch = rawMsg =~ /Missing query param '[^']+'/
     def invalidMatch = rawMsg =~ /Invalid query param '[^']+'/
-
+    def invalidJsonBody = rawMsg.contains("Invalid JSON body")
+    
     if (missingMatch.find()) {
         def cleanMsg = missingMatch.group(0)
         message.setHeader("CamelHttpResponseCode", 400)
@@ -27,6 +28,9 @@ def Message processData(Message message) {
         def cleanMsg = invalidMatch.group(0)
         message.setHeader("CamelHttpResponseCode", 400)
         message.setBody("{\"error\":\"${cleanMsg}\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
+    } else if (invalidJsonBody) {
+    message.setHeader("CamelHttpResponseCode", 400)
+    message.setBody("{\"error\":\"Invalid JSON body\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
     } else {
         message.setHeader("CamelHttpResponseCode", 502)
         message.setBody("{\"error\":\"Backend system error\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
