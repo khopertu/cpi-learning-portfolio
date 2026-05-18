@@ -16,8 +16,8 @@ def Message processData(Message message) {
             ?: headers.get("SAP_MessageProcessingLogID")
             ?: "")
 
-    def missingMatch = rawMsg =~ /Missing query param '[^']+'/
-    def invalidMatch = rawMsg =~ /Invalid query param '[^']+'/
+    def missingMatch = rawMsg =~ /Missing required field '[^']+'/
+    def invalidMatch = rawMsg =~ /Invalid value for field '[^']+'/
     def invalidJsonBody = rawMsg.contains("Invalid JSON body")
     
     if (missingMatch.find()) {

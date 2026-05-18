@@ -50,7 +50,7 @@ Request:
 
 Expected result:
 - status code: `400`
-- error: `Invalid query param 'source'`
+- error: `Invalid value for field 'source'`
 
 ---
 
@@ -64,7 +64,7 @@ Request:
 
 Expected result:
 - status code: `400`
-- error: `Missing query param 'name'`
+- error: `Missing required field 'name'`
 
 ---
 
@@ -78,7 +78,7 @@ Request:
 
 Expected result:
 - status code: `400`
-- error: `Invalid query param 'region'`
+- error: `Invalid value for field 'region'`
 
 ## 6) POST JSON body success case
 

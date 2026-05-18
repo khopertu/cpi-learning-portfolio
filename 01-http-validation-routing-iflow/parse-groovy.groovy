@@ -51,7 +51,7 @@ def Message processData(Message message) {
     def region = params["region"]?.trim()
 
     if (!name) {
-        throw new Exception("Missing query param 'name'")
+        throw new Exception("Missing required field 'name'")
     }
 
     if (!group) {
@@ -71,7 +71,7 @@ def Message processData(Message message) {
     }
 
     if (!(source in ["web", "mobile", "api"])) {
-        throw new Exception("Invalid query param 'source'")
+        throw new Exception("Invalid value for field 'source'")
     }
 
     if (!region) {
@@ -79,7 +79,7 @@ def Message processData(Message message) {
     }
 
     if (!(region in ["EU", "NA", "APAC"])) {
-        throw new Exception("Invalid query param 'region'")
+        throw new Exception("Invalid value for field 'region'")
     }
 
     def channel

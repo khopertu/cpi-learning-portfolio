@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.2 - Generic Field Validation Messages
+
+Updated validation error wording to support both query-parameter input and JSON body input more cleanly.
+
+### Changed
+
+- Replaced query-param-specific validation wording with generic field-based wording
+- Changed `Missing query param 'name'` to `Missing required field 'name'`
+- Changed `Invalid query param 'source'` to `Invalid value for field 'source'`
+- Changed `Invalid query param 'region'` to `Invalid value for field 'region'`
+- Updated Error Handler matching logic for the new validation messages
+- Updated test case expectations for the new error messages
+
+### Verified
+
+- Missing `name` still returns HTTP `400`
+- Invalid `source` still returns HTTP `400`
+- Existing successful query-param and JSON body flows remain unchanged
+
+---
+
 ## 1.1 - JSON Body Input Support
 
 Added support for POST requests with JSON body input.
