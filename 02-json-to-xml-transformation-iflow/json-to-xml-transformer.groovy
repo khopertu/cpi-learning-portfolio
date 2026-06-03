@@ -4,16 +4,43 @@ import groovy.xml.MarkupBuilder
 
 def Message processData(Message message) {
 
-    def reader = message.getBody(java.io.Reader)
-    def parsedBody = new JsonSlurper().parse(reader)
+    def parsedBody
+
+    try {
+        def reader = message.getBody(java.io.Reader)
+        parsedBody = new JsonSlurper().parse(reader)
+
+        if (!(parsedBody instanceof Map)) {
+            throw new Exception("Invalid JSON body")
+        }
+
+    } catch (Exception e) {
+        throw new Exception("Invalid JSON body")
+    }
+
+    def nameValue = parsedBody.name?.toString()?.trim()
+    def sourceValue = parsedBody.source?.toString()?.trim()
+    def regionValue = parsedBody.region?.toString()?.trim()
+
+    if (!nameValue) {
+        throw new Exception("Missing required field 'name'")
+    }
+
+    if (!sourceValue) {
+        throw new Exception("Missing required field 'source'")
+    }
+
+    if (!regionValue) {
+        throw new Exception("Missing required field 'region'")
+    }
 
     def writer = new StringWriter()
     def xml = new MarkupBuilder(writer)
 
     xml.request {
-        name(parsedBody.name ?: "")
-        source(parsedBody.source ?: "")
-        region(parsedBody.region ?: "")
+        name(nameValue)
+        source(sourceValue)
+        region(regionValue)
     }
 
     message.setHeader("Content-Type", "application/xml")

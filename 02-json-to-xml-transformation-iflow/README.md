@@ -74,6 +74,6 @@ One system may send JSON, while another system expects XML. An integration flow 
 
 ## Current Status
 
-Project 2 is currently in the design phase.
+Project 2.0 introduced the basic JSON to XML transformation.
 
-The first planned version will transform a simple JSON request body into an XML response.
+Project 2.1 added validation and error handling for missing required fields and malformed JSON body input.
