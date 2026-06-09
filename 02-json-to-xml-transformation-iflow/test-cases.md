@@ -99,6 +99,94 @@ Screenshot evidence:
 
 ---
 
+## Test 4 - Invalid Source Value
+
+### Request
+
+```http
+POST /json2xml
+Content-Type: application/json
+```
+
+```json
+{
+  "name": "Alex",
+  "source": "desktop",
+  "region": "EU"
+}
+```
+
+### Expected Result
+
+```text
+HTTP 400
+```
+
+```json
+{
+  "error": "Invalid value for field 'source'"
+}
+```
+
+### Result
+
+The iFlow returns HTTP `400` because `desktop` is not an allowed value for the `source` field.
+
+Allowed values:
+
+* `web`
+* `mobile`
+* `api`
+
+### Screenshot Evidence
+
+* `04-invalid-source-error-response.png`
+
+---
+
+## Test 5 - Invalid Region Value
+
+### Request
+
+```http
+POST /json2xml
+Content-Type: application/json
+```
+
+```json
+{
+  "name": "Alex",
+  "source": "mobile",
+  "region": "LATAM"
+}
+```
+
+### Expected Result
+
+```text
+HTTP 400
+```
+
+```json
+{
+  "error": "Invalid value for field 'region'"
+}
+```
+
+### Result
+
+The iFlow returns HTTP `400` because `LATAM` is not an allowed value for the `region` field.
+
+Allowed values:
+
+* `EU`
+* `NA`
+* `APAC`
+
+### Screenshot Evidence
+
+* `05-invalid-region-error-response.png`
+
 ## Notes
 
 These tests check:

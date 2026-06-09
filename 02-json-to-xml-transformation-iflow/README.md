@@ -40,19 +40,22 @@ The goal of this iFlow is to practice:
 
 ## Flow Design
 
-Planned main flow:
+Main flow:
 
-- HTTPS Sender
-- GS JSON to XML Transformer
-- End
+* HTTPS Sender
+* GS JSON to XML Transformer
+* End
 
-Possible later extensions:
+Exception flow:
 
-- input validation
-- error handling
-- support for missing fields
-- XML-to-JSON transformation
-- integration with a receiver system
+* Exception Subprocess
+* GS Error Handler
+* End
+
+The main flow receives a JSON request body, validates the required fields and allowed values, transforms the message into XML, and returns the XML response.
+
+The exception flow handles client-side input errors such as missing required fields, malformed JSON, and invalid allowed values.
+
 
 ## Key Concepts
 
@@ -72,8 +75,33 @@ In real integration scenarios, different systems often expect different message 
 
 One system may send JSON, while another system expects XML. An integration flow can sit between those systems and transform the message so the receiving system can process it correctly.
 
+
+
 ## Current Status
 
 Project 2.0 introduced the basic JSON to XML transformation.
 
 Project 2.1 added validation and error handling for missing required fields and malformed JSON body input.
+
+Project 2.2 added allowed-value validation for selected fields:
+
+* `source` must be one of: `web`, `mobile`, `api`
+* `region` must be one of: `EU`, `NA`, `APAC`
+
+Invalid allowed-value inputs are handled as client-side input errors and return HTTP `400`.
+
+## Files
+
+- `json-to-xml-transformer.groovy` → parses JSON, validates input, and builds the XML response
+- `error-handler.groovy` → handles validation and parsing errors
+- `test-cases.md` → documents the tested scenarios
+- `CHANGELOG.md` → tracks project versions and improvements
+- `screenshots/` → contains test evidence
+
+## Screenshots
+
+- `01-post-json-to-xml-success-response.png` → valid JSON transformed into XML with HTTP 200
+- `02-missing-required-field-error.png` → missing required field handled with HTTP 400
+- `03-invalid-json-body-error.png` → malformed JSON body handled with HTTP 400
+- `04-invalid-source-error-response.png` → invalid `source` handled with HTTP 400
+- `05-invalid-region-error-response.png` → invalid `region` handled with HTTP 400

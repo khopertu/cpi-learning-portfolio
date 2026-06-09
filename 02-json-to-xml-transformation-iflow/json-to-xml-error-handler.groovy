@@ -16,14 +16,19 @@ def Message processData(Message message) {
             ?: headers.get("SAP_MessageProcessingLogID")
             ?: "")
 
-    def missingMatch = rawMsg =~ /Missing required field '[^']+'/
-    def invalidJsonBody = rawMsg.contains("Invalid JSON body")
+	def missingMatch = rawMsg =~ /Missing required field '[^']+'/
+	def invalidValueMatch = rawMsg =~ /Invalid value for field '[^']+'/
+	def invalidJsonBody = rawMsg.contains("Invalid JSON body")
 
     if (missingMatch.find()) {
-        def cleanMsg = missingMatch.group(0)
-        message.setHeader("CamelHttpResponseCode", 400)
-        message.setBody("{\"error\":\"${cleanMsg}\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
-    } else if (invalidJsonBody) {
+    def cleanMsg = missingMatch.group(0)
+    message.setHeader("CamelHttpResponseCode", 400)
+    message.setBody("{\"error\":\"${cleanMsg}\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
+	} else if (invalidValueMatch.find()) {
+    def cleanMsg = invalidValueMatch.group(0)
+    message.setHeader("CamelHttpResponseCode", 400)
+    message.setBody("{\"error\":\"${cleanMsg}\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
+	} else if (invalidJsonBody) {
         message.setHeader("CamelHttpResponseCode", 400)
         message.setBody("{\"error\":\"Invalid JSON body\",\"timestamp\":\"${ts}\",\"mplId\":\"${mplId}\"}")
     } else {

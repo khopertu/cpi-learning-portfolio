@@ -33,7 +33,18 @@ def Message processData(Message message) {
     if (!regionValue) {
         throw new Exception("Missing required field 'region'")
     }
+	
+	def allowedSources = ["web", "mobile", "api"]
+	def allowedRegions = ["EU", "NA", "APAC"]
 
+	if (!(sourceValue in allowedSources)) {
+    throw new Exception("Invalid value for field 'source'")
+	}
+
+	if (!(regionValue in allowedRegions)) {
+    throw new Exception("Invalid value for field 'region'")
+	}
+	
     def writer = new StringWriter()
     def xml = new MarkupBuilder(writer)
 

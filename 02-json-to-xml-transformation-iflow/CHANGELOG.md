@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.2 - Allowed-Value Validation
+
+Added allowed-value validation for selected input fields.
+
+### Added
+
+* Allowed-value validation for the `source` field
+* Allowed-value validation for the `region` field
+* Error handling for invalid allowed-value inputs
+* Test cases for invalid `source` and invalid `region`
+
+### Validation Rules
+
+Allowed `source` values:
+
+* `web`
+* `mobile`
+* `api`
+
+Allowed `region` values:
+
+* `EU`
+* `NA`
+* `APAC`
+
+### Verified
+
+* Invalid `source` returns HTTP `400`
+* Invalid `region` returns HTTP `400`
+* Valid JSON input still returns XML with HTTP `200`
+
 ## 2.1 - Validation and Error Handling
 
 Added validation and error handling to the JSON to XML transformation iFlow.
