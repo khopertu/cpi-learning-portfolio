@@ -187,6 +187,92 @@ Allowed values:
 
 * `05-invalid-region-error-response.png`
 
+## Test 6 - Nested XML Success Response
+
+### Request
+
+```http
+POST /json2xml
+Content-Type: application/json
+```
+
+```json
+{
+  "name": "Alex",
+  "source": "mobile",
+  "region": "EU"
+}
+```
+
+### Expected Result
+
+```text
+HTTP 200
+```
+
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>mobile</source>
+    <region>EU</region>
+  </metadata>
+</request>
+```
+
+### Result
+
+The iFlow returns HTTP `200` and transforms the JSON request body into a nested XML response.
+
+The `name` field is grouped under `user`, while `source` and `region` are grouped under `metadata`.
+
+### Screenshot Evidence
+
+- `06-nested-xml-success-response.png`
+
+---
+
+## Test 7 - Invalid Source After Nested XML Update
+
+### Request
+
+```http
+POST /json2xml
+Content-Type: application/json
+```
+
+```json
+{
+  "name": "Alex",
+  "source": "desktop",
+  "region": "EU"
+}
+```
+
+### Expected Result
+
+```text
+HTTP 400
+```
+
+```json
+{
+  "error": "Invalid value for field 'source'"
+}
+```
+
+### Result
+
+The iFlow still returns HTTP `400` for invalid `source` values after the nested XML output change.
+
+This confirms that validation and error handling still work after changing the XML response structure.
+
+### Screenshot Evidence
+
+- `07-invalid-source-after-nested-xml.png`
+
 ## Notes
 
 These tests check:

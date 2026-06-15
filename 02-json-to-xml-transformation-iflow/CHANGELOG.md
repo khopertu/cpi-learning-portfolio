@@ -1,5 +1,45 @@
 # Changelog
 
+## 2.3 - Nested XML Output
+
+Updated the XML response structure from flat XML to nested XML.
+
+### Changed
+
+- Moved `name` under a `user` section
+- Moved `source` and `region` under a `metadata` section
+- Updated the JSON to XML transformer to generate nested XML using `MarkupBuilder`
+
+### Previous XML Structure
+
+```xml
+<request>
+  <name>Alex</name>
+  <source>mobile</source>
+  <region>EU</region>
+</request>
+```
+
+### New XML Structure
+
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>mobile</source>
+    <region>EU</region>
+  </metadata>
+</request>
+```
+
+### Verified
+
+- Valid JSON returns nested XML with HTTP `200`
+- Invalid `source` still returns HTTP `400`
+- Existing validation and error handling continue to work
+
 ## 2.2 - Allowed-Value Validation
 
 Added allowed-value validation for selected input fields.

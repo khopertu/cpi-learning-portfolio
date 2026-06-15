@@ -49,10 +49,14 @@ def Message processData(Message message) {
     def xml = new MarkupBuilder(writer)
 
     xml.request {
-        name(nameValue)
-        source(sourceValue)
-        region(regionValue)
-    }
+		user {
+			name(nameValue)
+		}
+		metadata {
+			source(sourceValue)
+			region(regionValue)
+		}
+	}
 
     message.setHeader("Content-Type", "application/xml")
     message.setBody(writer.toString())
