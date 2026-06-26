@@ -45,7 +45,7 @@ The goal of this iFlow is to practice:
 }
 ```
 
-## Planned Flow Design
+## Flow Design
 
 Main flow:
 
@@ -59,9 +59,9 @@ Exception flow:
 * GS Error Handler
 * End
 
-The main flow will receive an XML request body, validate the required fields and allowed values, transform the message into JSON, and return the JSON response.
+The main flow receives an XML request body, validates the required fields and allowed values, transforms the message into JSON, and returns the JSON response.
 
-The exception flow will handle client-side input errors such as missing required fields, malformed XML, and invalid allowed values.
+The exception flow handles client-side input errors such as missing required fields, malformed XML, and invalid allowed values.
 
 ## Validation Rules
 
@@ -94,6 +94,7 @@ This project introduces:
 * request body processing
 * response body formatting
 * input validation
+* allowed-value validation
 * exception handling
 
 ## Why This Matters
@@ -106,6 +107,26 @@ Together with the JSON to XML project, this project demonstrates bidirectional t
 
 ## Current Status
 
-Project 3.0 implements the initial XML to JSON transformation.
+Project 3.0 implemented the initial XML to JSON transformation.
 
 The iFlow receives a nested XML request body, reads values from XML paths using `XmlSlurper`, builds a JSON response using `JsonBuilder`, and returns the transformed JSON response with HTTP `200`.
+
+Project 3.1 added validation and error handling.
+
+Missing required fields, malformed XML body input, and invalid allowed values are handled as client-side input errors and return HTTP `400`.
+
+## Files
+
+* `xml-to-json-transformer.groovy` → parses XML, validates input, and builds the JSON response
+* `error-handler.groovy` → handles validation and parsing errors
+* `test-cases.md` → documents the tested scenarios
+* `CHANGELOG.md` → tracks project versions and improvements
+* `screenshots/` → contains test evidence
+
+## Screenshots
+
+* `01-xml-to-json-success-response.png` → valid XML transformed into JSON with HTTP 200
+* `02-missing-required-field-error.png` → missing required field handled with HTTP 400
+* `03-invalid-source-error-response.png` → invalid `source` handled with HTTP 400
+* `04-invalid-region-error-response.png` → invalid `region` handled with HTTP 400
+* `05-invalid-xml-body-error-response.png` → malformed XML body handled with HTTP 400

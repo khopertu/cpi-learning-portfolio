@@ -41,19 +41,31 @@ The iFlow returns HTTP `200` and transforms the XML request body into a JSON res
 
 ### Screenshot Evidence
 
-- `01-xml-to-json-success-response.png`
+* `01-xml-to-json-success-response.png`
 
 ---
 
-## Planned Validation Tests
+## Test 2 - Missing Required Field
 
-The following tests will be added after the first version is implemented:
+### Request
 
-### Missing Required Field
+```http
+POST /xml2json
+Content-Type: application/xml
+```
 
-Example: missing `<name>`.
+```xml
+<request>
+  <user>
+  </user>
+  <metadata>
+    <source>mobile</source>
+    <region>EU</region>
+  </metadata>
+</request>
+```
 
-Expected result:
+### Expected Result
 
 ```text
 HTTP 400
@@ -65,27 +77,38 @@ HTTP 400
 }
 ```
 
-### Malformed XML Body
+### Result
 
-Example: broken or incomplete XML.
+The iFlow returns HTTP `400` because the required `name` field is missing from the XML request body.
 
-Expected result:
+### Screenshot Evidence
 
-```text
-HTTP 400
+* `02-missing-required-field-error.png`
+
+---
+
+## Test 3 - Invalid Source Value
+
+### Request
+
+```http
+POST /xml2json
+Content-Type: application/xml
 ```
 
-```json
-{
-  "error": "Invalid XML body"
-}
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>desktop</source>
+    <region>EU</region>
+  </metadata>
+</request>
 ```
 
-### Invalid Source Value
-
-Example: `<source>desktop</source>`.
-
-Expected result:
+### Expected Result
 
 ```text
 HTTP 400
@@ -97,11 +120,44 @@ HTTP 400
 }
 ```
 
-### Invalid Region Value
+### Result
 
-Example: `<region>LATAM</region>`.
+The iFlow returns HTTP `400` because `desktop` is not an allowed value for the `source` field.
 
-Expected result:
+Allowed values:
+
+* `web`
+* `mobile`
+* `api`
+
+### Screenshot Evidence
+
+* `03-invalid-source-error-response.png`
+
+---
+
+## Test 4 - Invalid Region Value
+
+### Request
+
+```http
+POST /xml2json
+Content-Type: application/xml
+```
+
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>mobile</source>
+    <region>LATAM</region>
+  </metadata>
+</request>
+```
+
+### Expected Result
 
 ```text
 HTTP 400
@@ -113,9 +169,67 @@ HTTP 400
 }
 ```
 
+### Result
+
+The iFlow returns HTTP `400` because `LATAM` is not an allowed value for the `region` field.
+
+Allowed values:
+
+* `EU`
+* `NA`
+* `APAC`
+
+### Screenshot Evidence
+
+* `04-invalid-region-error-response.png`
+
+---
+
+## Test 5 - Malformed XML Body
+
+### Request
+
+```http
+POST /xml2json
+Content-Type: application/xml
+```
+
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>mobile</source>
+    <region>EU</region>
+  </metadata>
+```
+
+### Expected Result
+
+```text
+HTTP 400
+```
+
+```json
+{
+  "error": "Invalid XML body"
+}
+```
+
+### Result
+
+The iFlow returns HTTP `400` because the XML request body is malformed.
+
+### Screenshot Evidence
+
+* `05-invalid-xml-body-error-response.png`
+
+---
+
 ## Notes
 
-This project will validate the same business rules as the JSON to XML transformation project:
+This project validates the same business rules as the JSON to XML transformation project:
 
 * `name` is required
 * `source` is required
@@ -123,4 +237,4 @@ This project will validate the same business rules as the JSON to XML transforma
 * `source` must be one of: `web`, `mobile`, `api`
 * `region` must be one of: `EU`, `NA`, `APAC`
 
-The initial version will focus on transforming valid XML into JSON.
+Client-side input errors return HTTP `400`.
