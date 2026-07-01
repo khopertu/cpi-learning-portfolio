@@ -1,5 +1,45 @@
 # Changelog
 
+## 3.2 - Nested JSON Output
+
+Updated the JSON response structure from flat JSON to nested JSON.
+
+### Changed
+
+- Moved `name` under a `user` object
+- Moved `source` and `region` under a `metadata` object
+- Updated the XML to JSON transformer to generate nested JSON using `JsonBuilder`
+
+### Previous JSON Structure
+
+```json
+{
+  "name": "Alex",
+  "source": "mobile",
+  "region": "EU"
+}
+```
+
+### New JSON Structure
+
+```json
+{
+  "user": {
+    "name": "Alex"
+  },
+  "metadata": {
+    "source": "mobile",
+    "region": "EU"
+  }
+}
+```
+
+### Verified
+
+- Valid XML returns nested JSON with HTTP `200`
+- Invalid `source` still returns HTTP `400`
+- Existing validation and error handling continue to work
+
 ## 3.1 - Validation and Error Handling
 
 Added validation and error handling to the XML to JSON transformation iFlow.

@@ -41,10 +41,14 @@ def Message processData(Message message) {
     }
 
     def json = new JsonBuilder([
-        name  : nameValue,
+    user: [
+        name: nameValue
+		],
+    metadata: [
         source: sourceValue,
         region: regionValue
-    ])
+		]
+	])
 
     message.setHeader("Content-Type", "application/json")
     message.setBody(json.toPrettyString())

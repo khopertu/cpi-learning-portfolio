@@ -37,13 +37,20 @@ The goal of this iFlow is to practice:
 
 ## Example Output
 
+## Example Output
+
 ```json
 {
-  "name": "Alex",
-  "source": "mobile",
-  "region": "EU"
+  "user": {
+    "name": "Alex"
+  },
+  "metadata": {
+    "source": "mobile",
+    "region": "EU"
+  }
 }
 ```
+
 
 ## Flow Design
 
@@ -115,6 +122,13 @@ Project 3.1 added validation and error handling.
 
 Missing required fields, malformed XML body input, and invalid allowed values are handled as client-side input errors and return HTTP `400`.
 
+Project 3.2 updated the JSON response from a flat structure to a nested structure.
+
+The `name` field is now grouped under a `user` object, while `source` and `region` are grouped under a `metadata` object.
+
+Existing validation and error handling continue to work after the nested JSON update.
+
+
 ## Files
 
 * `xml-to-json-transformer.groovy` → parses XML, validates input, and builds the JSON response
@@ -130,3 +144,6 @@ Missing required fields, malformed XML body input, and invalid allowed values ar
 * `03-invalid-source-error-response.png` → invalid `source` handled with HTTP 400
 * `04-invalid-region-error-response.png` → invalid `region` handled with HTTP 400
 * `05-invalid-xml-body-error-response.png` → malformed XML body handled with HTTP 400
+* `06-nested-json-success-response.png` → valid XML transformed into nested JSON with HTTP 200
+* `07-invalid-source-after-nested-json.png` → invalid `source` still handled with HTTP 400 after nested JSON update
+

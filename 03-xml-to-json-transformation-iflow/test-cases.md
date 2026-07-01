@@ -227,6 +227,100 @@ The iFlow returns HTTP `400` because the XML request body is malformed.
 
 ---
 
+## Test 6 - Nested JSON Success Response
+
+### Request
+
+```http
+POST /xml2json
+Content-Type: application/xml
+```
+
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>mobile</source>
+    <region>EU</region>
+  </metadata>
+</request>
+```
+
+### Expected Result
+
+```text
+HTTP 200
+```
+
+```json
+{
+  "user": {
+    "name": "Alex"
+  },
+  "metadata": {
+    "source": "mobile",
+    "region": "EU"
+  }
+}
+```
+
+### Result
+
+The iFlow returns HTTP `200` and transforms the XML request body into a nested JSON response.
+
+The `name` field is grouped under `user`, while `source` and `region` are grouped under `metadata`.
+
+### Screenshot Evidence
+
+- `06-nested-json-success-response.png`
+
+---
+
+## Test 7 - Invalid Source After Nested JSON Update
+
+### Request
+
+```http
+POST /xml2json
+Content-Type: application/xml
+```
+
+```xml
+<request>
+  <user>
+    <name>Alex</name>
+  </user>
+  <metadata>
+    <source>desktop</source>
+    <region>EU</region>
+  </metadata>
+</request>
+```
+
+### Expected Result
+
+```text
+HTTP 400
+```
+
+```json
+{
+  "error": "Invalid value for field 'source'"
+}
+```
+
+### Result
+
+The iFlow still returns HTTP `400` for invalid `source` values after the nested JSON output change.
+
+This confirms that validation and error handling still work after changing the JSON response structure.
+
+### Screenshot Evidence
+
+- `07-invalid-source-after-nested-json.png`
+
 ## Notes
 
 This project validates the same business rules as the JSON to XML transformation project:
