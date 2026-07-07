@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:string"/>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="username" type="xs:string"/>
+        <xs:element name="email" type="xs:string"/>
+        <xs:element name="address">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="street" type="xs:string"/>
+              <xs:element name="suite" type="xs:string"/>
+              <xs:element name="city" type="xs:string"/>
+              <xs:element name="zipcode" type="xs:string"/>
+              <xs:element name="geo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="lat" type="xs:string"/>
+                    <xs:element name="lng" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="phone" type="xs:string"/>
+        <xs:element name="website" type="xs:string"/>
+        <xs:element name="company">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element name="catchPhrase" type="xs:string"/>
+              <xs:element name="bs" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
