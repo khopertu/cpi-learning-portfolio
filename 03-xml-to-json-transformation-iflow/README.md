@@ -128,6 +128,13 @@ The `name` field is now grouped under a `user` object, while `source` and `regio
 
 Existing validation and error handling continue to work after the nested JSON update.
 
+## Learning Note
+
+This project intentionally uses Groovy-based parsing and response generation to practice message structure, validation, transformation logic, and structured error handling at a low level.
+
+In real CPI projects, standard converter steps such as JSON to XML Converter, XML to JSON Converter, or Message Mapping are generally preferred over custom Groovy when they meet the requirement, since they are easier to maintain and align with platform-native tooling.
+
+Project 4 (External Receiver Call and Standard Mapping) demonstrates this shift: it uses standard CPI converters and Message Mapping for transformation, keeping Groovy limited to input validation and structured error handling.
 
 ## Files
 

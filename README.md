@@ -126,7 +126,34 @@ Key concepts:
 
 ---
 
-## Shared Validation Rules
+### [04 - External Receiver Call and Standard Mapping iFlow](./04-external-receiver-call-iflow)
+
+A practice iFlow focused on calling an external receiver system, reshaping its response using standard CPI tools instead of Groovy, and correctly separating client input errors, not-found responses, and backend/technical failures.
+
+This project shifts from the Groovy-heavy transformation approach used in Projects 2 and 3 toward platform-native CPI tooling: standard JSON-to-XML / XML-to-JSON Converters and Message Mapping, with Groovy reserved for input validation and structured error handling only.
+
+Response reshaping example:
+
+```json
+// Receiver returns (partial)
+{ "id": 1, "name": "Leanne Graham", "username": "Bret", "email": "Sincere@april.biz", "address": { "city": "Gwenborough", ... }, "company": { "name": "Romaguera-Crona", ... } }
+
+// iFlow returns
+{
+  "customer": { "id": "1", "name": "Leanne Graham", "contactEmail": "Sincere@april.biz" },
+  "location": { "city": "Gwenborough" },
+  "organization": { "name": "Romaguera-Crona" }
+}
+```
+
+Key concepts:
+
+* Dynamic HTTP receiver addressing via `CamelHttpUri`
+* Request Reply to an external API
+* Standard JSON-to-XML / XML-to-JSON Converters
+* Message Mapping for field dropping, renaming, and nesting
+* Minimal Groovy, scoped to input validation and structured error handling
+* Correct separation of client (`400`), not-found (`404`), and backend (`502`) errors
 
 The transformation projects use the same business validation rules.
 
@@ -169,6 +196,9 @@ This portfolio demonstrates practical experience with:
 * using Exception Subprocesses for error handling
 * documenting test cases and implementation changes
 * maintaining a GitHub-based learning portfolio
+* calling external receiver systems and reshaping their responses
+* using standard CPI converters and Message Mapping instead of custom scripting where appropriate
+* distinguishing client, not-found, and backend/technical error semantics
 
 ---
 
@@ -179,9 +209,8 @@ Completed projects:
 * Project 1 - HTTP Validation and Routing
 * Project 2 - JSON to XML Transformation
 * Project 3 - XML to JSON Transformation
+* Project 4 - External Receiver Call and Standard Mapping
 
 Next planned project:
 
-* Project 4 - External Receiver Call and Response Handling
-
-The next project will focus on calling an external receiver system, processing the receiver response, and handling backend/system errors in a more realistic integration scenario.
+Not yet decided. Candidates include an authenticated receiver scenario, API Management exposure, or additional adapter/mapping patterns.

@@ -125,6 +125,14 @@ Project 2.3 updated the XML response from a flat structure to a nested structure
 
 The `name` field is now grouped under a `user` section, while `source` and `region` are grouped under a `metadata` section.
 
+## Learning Note
+
+This project intentionally uses Groovy-based parsing and response generation to practice message structure, validation, transformation logic, and structured error handling at a low level.
+
+In real CPI projects, standard converter steps such as JSON to XML Converter, XML to JSON Converter, or Message Mapping are generally preferred over custom Groovy when they meet the requirement, since they are easier to maintain and align with platform-native tooling.
+
+Project 4 (External Receiver Call and Standard Mapping) demonstrates this shift: it uses standard CPI converters and Message Mapping for transformation, keeping Groovy limited to input validation and structured error handling.
+
 ## Files
 
 * `json-to-xml-transformer.groovy` → parses JSON, validates input, and builds the XML response
